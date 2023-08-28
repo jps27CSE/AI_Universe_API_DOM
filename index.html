@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.6.2/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>AI Universe</title>
+  </head>
+  <body>
+    <header>
+      <h3 class="text-center text-4xl font-bold mt-2">AI Universe HUB</h3>
+      <div class="w-96 flex justify-center mx-auto mt-4">
+        <button class="btn btn-error text-white">Sort By Date</button>
+      </div>
+    </header>
+    <main>
+      <!-- card seciton  -->
+      <section
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 container mx-auto mt-8"
+        id="card_container"
+      ></section>
+
+      <section>
+        <div class="w-96 flex justify-center mx-auto mt-4 mb-4">
+          <div class="hidden" id="show_all">
+            <button class="btn btn-error text-white" onclick="showAll()">
+              See More
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Open the modal using ID.showModal() method -->
+      <dialog id="showDetails" class="modal">
+        <form method="dialog" class="modal-box w-11/12 max-w-5xl">
+          <div id="modal_infos" class="flex flex-row justify-between">
+            <div
+              class="border-2 border-solid border-rose-500 p-10 mr-5 rounded-lg"
+            >
+              <p class="text-xl font-bold">
+                ChatGPT is an AI-powered chatbot platform that uses OpenAI's GPT
+                technology to simulate human conversation.
+              </p>
+
+              <div class="flex flex-row">
+                <div
+                  class="border-2 text-sm text-green-600 font-bold p-2 rounded-lg"
+                >
+                  $10/month Basic
+                </div>
+                <div
+                  class="border-2 text-sm text-orange-600 font-bold p-2 rounded-lg"
+                >
+                  $50/month Pro
+                </div>
+                <div
+                  class="border-2 text-sm text-red-600 font-bold p-2 rounded-lg"
+                >
+                  Contact us Enterprise
+                </div>
+              </div>
+
+              <div class="flex flex-row justify-between">
+                <div>
+                  <h1>Features</h1>
+                  <ul class="list-decimal">
+                    <li>Test</li>
+                    <li>Test</li>
+                    <li>Test</li>
+                  </ul>
+                </div>
+                <div>
+                  <h1>Integrations</h1>
+
+                  <ul class="list-decimal">
+                    <li>Test</li>
+                    <li>Test</li>
+                    <li>Test</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class="border-2 border-solid border-rose-500 p-10 relative rounded-lg"
+            >
+              <p
+                class="absolute flex justify-end text-white bg-red-500 rounded-lg"
+              >
+                94% accuracy
+              </p>
+              <img
+                class=""
+                src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
+                alt=""
+              />
+
+              <p class="text-2xl font-bold">Hi, how are you doing today?</p>
+              <p>
+                I'm doing well, thank you for asking. How can I assist you
+                today?
+              </p>
+            </div>
+          </div>
+
+          <div class="modal-action">
+            <div id="modal_infos"></div>
+            <button class="btn">Close</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
