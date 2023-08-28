@@ -1,18 +1,27 @@
-const fetchData = async (isShowAll) => {
+let isDataSorted = false;
+
+const fetchData = async (isShowAll, isSort) => {
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
 
   const fetchData = await fetch(url);
   const data = await fetchData.json();
-  showCard(data.data.tools, isShowAll);
+
+  showCard(data.data.tools, isShowAll, isSort);
 };
 
-const showCard = (data, isShowAll) => {
-  console.log(data);
-
+const showCard = (data, isShowAll, isSort) => {
   const card_container = document.getElementById("card_container");
   card_container.textContent = "";
 
   const show_All_container = document.getElementById("show_all");
+
+  if (isSort) {
+    data.sort((a, b) => {
+      const dateA = new Date(a.published_in);
+      const dateB = new Date(b.published_in);
+      return dateB - dateA; // Descending order (newest first)
+    });
+  }
 
   if (data.length > 6 && !isShowAll) {
     show_All_container.classList.remove("hidden");
@@ -30,36 +39,48 @@ const showCard = (data, isShowAll) => {
       .map((feature) => `<li>${feature}</li>`)
       .join("");
     cardContain.innerHTML = `
-    <div class="card w-96 bg-base-100 shadow-xl">
-    <figure>
-      <img
-        // src="${card?.image}"
-        alt="Shoes"
-      />
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title">Features</h2>
-      <ul class="list-decimal">
-      ${featuresList}
-      </ul>
-
-      <hr />
-
-      <h3 class="text-xl font-bold">${card.name}</h3>
-      <p>${card.published_in}</p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary" onclick="showALlDetailsFetch('${card.id}')" >></button>
+      <div class="card w-80 bg-base-100 shadow-xl ">
+      <figure>
+        <img
+          // src="${card?.image}"
+          alt="Shoes"
+        />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">Features</h2>
+        <ul class="list-decimal">
+        ${featuresList}
+        </ul>
+  
+        <hr />
+  
+        <h3 class="text-xl font-bold">${card.name}</h3>
+        <p>${card.published_in}</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary" onclick="showALlDetailsFetch('${card.id}')" >></button>
+        </div>
       </div>
     </div>
-  </div>
-    `;
+      `;
 
     card_container.appendChild(cardContain);
   });
 };
 
-const showAll = () => {
-  fetchData(true);
+const showAll = async () => {
+  const url = `https://openapi.programming-hero.com/api/ai/tools`;
+  const fetchData = await fetch(url);
+  const data = await fetchData.json();
+
+  if (isDataSorted) {
+    data.data.tools.sort((a, b) => {
+      const dateA = new Date(a.published_in);
+      const dateB = new Date(b.published_in);
+      return dateB - dateA;
+    });
+  }
+
+  showCard(data.data.tools, true, isDataSorted);
 };
 
 const showALlDetailsFetch = async (card_parameter) => {
@@ -73,8 +94,6 @@ const showALlDetailsFetch = async (card_parameter) => {
 };
 
 const modalFunction = (data) => {
-  console.log(data);
-
   const modalInfos = document.getElementById("modal_infos");
 
   let featuresList = "";
@@ -156,6 +175,15 @@ const modalFunction = (data) => {
 </div>`;
 
   showDetails.showModal();
+};
+
+const sortFunction = async () => {
+  isDataSorted = true;
+  const url = `https://openapi.programming-hero.com/api/ai/tools`;
+  const fetchData = await fetch(url);
+  const data = await fetchData.json();
+
+  showCard(data.data.tools, false, true);
 };
 
 fetchData();
